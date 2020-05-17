@@ -1,4 +1,12 @@
 class Post
+
+  def self.post_types
+    [Memo, Link, Task]
+  end
+
+  def self.create(tipeindex)
+    return post_types[tipeindex].new
+  end
   def initialize
     @created_at = Time.now
     @text = nil
@@ -14,7 +22,7 @@ class Post
 
   def save
     file = File.new(file_path, "w:UTF-8")
-    for item to_strings do
+    for item in to_strings do
       file.puts(item)
     end
     file.close
@@ -22,7 +30,7 @@ class Post
 
   def file_path
     current_path = File.dirname(__FILE__ )
-    file_name = @created_at.strftime("#{self.class.name}_%Y.%m.%d_%H:%M%:%S.txt")
+    file_name = @created_at.strftime("#{self.class.name}_%Y.%m.%d_%H_%M%_%S.txt")
     return current_path  + "/" + file_name
   end
 end
